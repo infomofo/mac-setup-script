@@ -10,11 +10,6 @@ if [[ -z "${CI}" ]]; then
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 fi
 
-# Trackpad: enable tap to click for this user and for the login screen
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
 
@@ -50,9 +45,6 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false  
 
 # Enable full keyboard access for all controls e.g. enable Tab in modal dialogs
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-
-# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-defaults write com.apple.finder QuitMenuItem -bool true
 
 # Set Desktop as the default location for new Finder windows
 defaults write com.apple.finder NewWindowTarget -string "PfDe"
@@ -107,3 +99,6 @@ defaults write com.apple.ActivityMonitor ShowCategory -int 0
 # Sort Activity Monitor results by CPU usage
 defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
 defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+# Disable Notification Center and remove the menu bar icon
+launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
