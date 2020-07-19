@@ -2,45 +2,57 @@
 
 # Install some stuff before others!
 important_casks=(
-  dropbox
-  google-chrome
   firefox
+  google-chrome
   iterm2
   slack
-  1password
 )
 
 brews=(
-  coreutils
-  exa
-  findutils
-  fpp
-  git
-  gpg
-  httpie
   "imagemagick --with-webp"
-  neovim
+  awscli
+  bash
+  bash-completion
+  ccrypt
+  circleci
+  coreutils
+  git
+  github/gh/gh
+  gpg
+  kubectx
+  kubeseal
+  kustomize
   node
   nvm
+  pyenv
   python
   python3
   ruby
-  thefuck
-  trash
+  shellcheck
+  skaffold
+  tmux
+  wget
+  yarn
 )
 
 casks=(
-  alfred
-  bartender
-  bettertouchtool
-  licecap
-  notion
-  quicklook-json
-  quicklook-csv
-  spotify
+  calibre
+  discord
+  docker
+  flux
+  itsycal
+  jetbrains-toolbox
+  resilio-sync
+  slack
+  sourcetree
+  spectacle
+  tunnelblick
+  visual-studio-code
+  vlc
+  zoomus
 )
 
-git_email='hi@liamcampbell.info'
+git_email='will@infomofo.com'
 git_configs=(
   "branch.autoSetupRebase always"
   "color.ui auto"
@@ -53,7 +65,7 @@ git_configs=(
   "rerere.autoUpdate true"
   "remote.origin.prune true"
   "rerere.enabled true"
-  "user.name Liam Campbell"
+  "user.name Will Chiong"
   "user.email ${git_email}"
 )
 
