@@ -133,11 +133,8 @@ else
 fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-echo "Installing Oh My ZSH..."
-curl -L http://install.ohmyz.sh | sh
-
 echo "Setting ZSH as shell..."
-chsh -s /bin/zsh
+chsh -s /bin/bash
 
 echo "Install important software ..."
 brew tap caskroom/versions
