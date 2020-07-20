@@ -22,7 +22,6 @@ brews=(
   kubectx
   kubeseal
   kustomize
-  node
   nvm
   pyenv
   python
