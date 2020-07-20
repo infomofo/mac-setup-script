@@ -11,7 +11,7 @@ if [[ -z "${CI}" ]]; then
 fi
 
 # Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
+# sudo nvram SystemAudioVolume=" "
 
 # Close any open System Preferences panes, to prevent them from overriding settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -43,6 +43,10 @@ defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false  
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false   # Disable smart quotes
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false  # Disable auto-correct
 
+# Disable Natural Scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool false
+
 # Enable full keyboard access for all controls e.g. enable Tab in modal dialogs
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
@@ -64,9 +68,13 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 # Automatically open a new Finder window when a volume is mounted
-defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
-defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
-defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+# defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+# defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+# defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+# Set hot corners
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-br-corner -int 10
 
 # Use list view in all Finder windows by default (codes for the other view modes: `icnv`, `clmv`, `Flwv`)
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"

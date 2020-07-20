@@ -9,5 +9,5 @@ jobs:
         run: ./defaults.sh
       - name: Install Software
         run: ./install.sh
-      - name: Run Tests
-        run: shellcheck *.sh
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
