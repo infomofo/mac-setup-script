@@ -22,12 +22,12 @@ brews=(
   kubectx
   kubeseal
   kustomize
+  node
   nvm
   pyenv
   python
   python3
   ruby
-  shellcheck
   skaffold
   tmux
   wget
