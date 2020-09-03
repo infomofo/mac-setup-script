@@ -13,6 +13,7 @@ brews=(
   awscli
   bash
   bash-completion
+  black
   ccrypt
   circleci
   coreutils
@@ -24,6 +25,7 @@ brews=(
   kustomize
   node
   nvm
+  postgresql
   pyenv
   python
   python3
