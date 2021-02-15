@@ -128,8 +128,8 @@ echo "Setting ZSH as shell..."
 chsh -s /bin/zsh
 
 echo "Install important software ..."
-brew tap caskroom/versions
-install 'brew cask install' "${important_casks[@]}"
+brew tap homebrew/cask-versions
+install 'brew install --cask ' "${important_casks[@]}"
 
 prompt "Install packages"
 install 'brew_install_or_upgrade' "${brews[@]}"
@@ -153,11 +153,11 @@ alias ll='exa -l'
 " >> ~/.bash_profile
 
 prompt "Install software"
-install 'brew cask install' "${casks[@]}"
+install 'brew install --cask ' "${casks[@]}"
 
 prompt "Install secondary packages"
 brew tap homebrew/cask-fonts
-install 'brew cask install' "${fonts[@]}"
+install 'brew install --cask ' "${fonts[@]}"
 
 if [[ -z "${CI}" ]]; then
   prompt "Install software from App Store"
