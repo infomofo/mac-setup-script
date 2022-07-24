@@ -23,8 +23,6 @@ brews=(
   scala
   ################################
   coreutils
-  go
-  gpg
   #hosts
   "imagemagick --with-webp"
   macvim        # https://macvim-dev.github.io/macvim/
