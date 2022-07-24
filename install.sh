@@ -13,7 +13,7 @@ important_casks=(
 
 brews=(
   ##### Install these first ######
-  awscli
+  # awscli
   bash
   circleci
   git
