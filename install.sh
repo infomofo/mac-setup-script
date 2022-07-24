@@ -152,7 +152,7 @@ chsh -s /bin/bash
 
 echo "Install important software ..."
 brew tap homebrew/cask-versions
-install 'brew cask install' "${important_casks[@]}"
+install 'brew install --cask' "${important_casks[@]}"
 
 prompt "Install packages"
 install 'brew_install_or_upgrade' "${brews[@]}"
@@ -199,7 +199,7 @@ sudo chsh -s $(which xonsh)
 echo "source-bash --overwrite-aliases ~/.bash_profile" >> ~/.xonshrc
 
 prompt "Install software"
-install 'brew cask install' "${casks[@]}"
+install 'brew install --cask' "${casks[@]}"
 
 prompt "Install secondary packages"
 install 'pip3 install --upgrade' "${pips[@]}"
@@ -207,7 +207,7 @@ install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
 install 'code --install-extension' "${vscode[@]}"
 brew tap caskroom/fonts
-install 'brew cask install' "${fonts[@]}"
+install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"
 pip3 install --upgrade pip setuptools wheel
