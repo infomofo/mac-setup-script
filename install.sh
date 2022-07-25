@@ -28,6 +28,7 @@ brews=(
   macvim        # https://macvim-dev.github.io/macvim/
   node
   python 
+  reattach-to-user-namespace # this enables copy/paste for vi within tmux
   tmux
   tree
   # "vim --with-override-system-vi"
@@ -204,7 +205,7 @@ install 'pip3 install --upgrade' "${pips[@]}"
 install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
 install 'code --install-extension' "${vscode[@]}"
-brew tap caskroom/fonts
+brew tap homebrew/cask-fonts
 install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"
