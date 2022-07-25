@@ -90,7 +90,7 @@ set -x
 
 function prompt {
   if [[ -z "${CI}" ]]; then
-    read -p "Hit Enter to $1 ..."
+    read -p -r "Hit Enter to $1 ..."
   fi
 }
 
@@ -105,7 +105,7 @@ function install {
       echo "Installed $pkg"
     else
       echo "Failed to execute: $exec"
-      if [[ ! -z "${CI}" ]]; then
+      if [[ -n "${CI}" ]]; then
         exit 1
       fi
     fi
