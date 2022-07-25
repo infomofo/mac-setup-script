@@ -84,8 +84,6 @@ fonts=(
   font-source-code-pro
 )
 
-JDK_VERSION=amazon-corretto@1.8.222-10.1
-
 ######################################## End of app list ########################################
 set +e
 set -x
@@ -146,9 +144,6 @@ else
 fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-echo "Setting BASH as shell..."
-chsh -s /bin/bash
-
 echo "Install important software ..."
 brew tap homebrew/cask-versions
 install 'brew install --cask' "${important_casks[@]}"
@@ -157,16 +152,10 @@ prompt "Install packages"
 install 'brew_install_or_upgrade' "${brews[@]}"
 brew link --overwrite ruby
 
-prompt "Install JDK=${JDK_VERSION}"
-curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
-jabba install ${JDK_VERSION}
-jabba alias default ${JDK_VERSION}
-java -version
-
 prompt "Set git defaults"
 for config in "${git_configs[@]}"
 do
-  git config --global ${config}
+  git config --global "${config}"
 done
 
 if [[ -z "${CI}" ]]; then
@@ -178,24 +167,8 @@ if [[ -z "${CI}" ]]; then
 fi  
 
 prompt "Upgrade bash"
-brew install bash bash-completion2 fzf
 sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
 sudo chsh -s "$(brew --prefix)"/bin/bash
-# Install https://github.com/twolfson/sexy-bash-prompt
-touch ~/.bash_profile # see https://github.com/twolfson/sexy-bash-prompt/issues/51
-(cd /tmp && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install) && source ~/.bashrc
-hstr --show-configuration >> ~/.bashrc
-
-echo "
-alias del='mv -t ~/.Trash/'
-alias ls='exa -l'
-alias cat=bat
-" >> ~/.bash_profile
-
-prompt "Setting up xonsh"
-sudo bash -c "which xonsh >> /private/etc/shells"
-sudo chsh -s $(which xonsh)
-echo "source-bash --overwrite-aliases ~/.bash_profile" >> ~/.xonshrc
 
 prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
