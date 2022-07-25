@@ -30,7 +30,7 @@ brews=(
   python 
   tmux
   tree
-  "vim --with-override-system-vi"
+  # "vim --with-override-system-vi"
   "wget --with-iri"
 )
 
