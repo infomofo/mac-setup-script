@@ -17,12 +17,14 @@ brews=(
   python3
   ################################
   coreutils
+  fzf
   #hosts
   imagemagick
+  jq
   macvim        # https://macvim-dev.github.io/macvim/
   node
-  python 
-  reattach-to-user-namespace # this enables copy/paste for vi within tmux
+  python
+  shellcheck
   tmux
   tree
   # "vim --with-override-system-vi"
@@ -38,15 +40,12 @@ casks=(
   rectangle
   signal
   sourcetree
+  warp
   zoom
 )
 
-gems=(
-  bundler
-)
-
 npms=(
-  gitjk
+  @anthropic-ai/claude-code
   n           # https://github.com/tj/n
 )
 
@@ -166,8 +165,10 @@ sudo chsh -s "$(brew --prefix)"/bin/bash
 prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
 
+prompt "Install gh extensions"
+gh extension install github/gh-copilot
+
 prompt "Install secondary packages"
-install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
 install 'code --install-extension' "${vscode[@]}"
 install 'brew install --cask' "${fonts[@]}"
