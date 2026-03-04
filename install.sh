@@ -10,35 +10,36 @@ important_casks=(
 
 brews=(
   ##### Install these first ######
-  # awscli
+  awscli
   bash
   gh
   git
   python3
   ################################
+  atlassian-labs/acli/acli
   coreutils
   fzf
   #hosts
-  imagemagick
+  gemini-cli
   jq
   macvim        # https://macvim-dev.github.io/macvim/
   node
   python
+  reattach-to-user-namespace
   shellcheck
   tmux
   tree
   # "vim --with-override-system-vi"
   wget
+  yamllint
+  yq
 )
 
 casks=(
-  calibre
-  discord
   github
   itsycal
   obsidian
   rectangle
-  signal
   sourcetree
   warp
   zoom
