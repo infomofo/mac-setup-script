@@ -14,7 +14,6 @@ personal_casks=(
 
 personal_brews=(
   imagemagick
-  youtube-dl
 )
 
 ######################################## End of app list ########################################
