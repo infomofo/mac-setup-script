@@ -41,10 +41,6 @@ casks=(
   zoom
 )
 
-pips=(
-  pip
-)
-
 gems=(
   bundler
 )
@@ -171,14 +167,12 @@ prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
 
 prompt "Install secondary packages"
-install 'pip3 install --upgrade' "${pips[@]}"
 install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
 install 'code --install-extension' "${vscode[@]}"
 install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"
-pip3 install --upgrade pip setuptools wheel
 if [[ -z "${CI}" ]]; then
   m update install all
 fi
