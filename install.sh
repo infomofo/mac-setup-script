@@ -2,10 +2,8 @@
 
 # Install some stuff before others!
 important_casks=(
-  firefox
   google-chrome
   iterm2
-  jetbrains-toolbox
   slack
   visual-studio-code
 )
@@ -14,12 +12,9 @@ brews=(
   ##### Install these first ######
   # awscli
   bash
-  circleci
+  gh
   git
-  github/gh/gh
   python3
-  sbt  
-  scala
   ################################
   coreutils
   #hosts
@@ -37,10 +32,12 @@ brews=(
 casks=(
   calibre
   discord
+  github
   itsycal
+  obsidian
+  rectangle
   signal
   sourcetree
-  spectacle
   zoom
 )
 
@@ -75,8 +72,6 @@ git_configs=(
 )
 
 vscode=(
-  scalameta.metals
-  scala-lang.scala
 )
 
 fonts=(
@@ -91,7 +86,7 @@ set -x
 
 function prompt {
   if [[ -z "${CI}" ]]; then
-    read -p -r "Hit Enter to $1 ..."
+    read -r -p "Hit Enter to $1 ..."
   fi
 }
 
@@ -146,7 +141,6 @@ fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 echo "Install important software ..."
-brew tap homebrew/cask-versions
 install 'brew install --cask' "${important_casks[@]}"
 
 prompt "Install packages"
@@ -156,13 +150,15 @@ brew link --overwrite ruby
 prompt "Set git defaults"
 for config in "${git_configs[@]}"
 do
-  git config --global "${config}"
+  key="${config%% *}"
+  value="${config#* }"
+  git config --global "${key}" "${value}"
 done
 
 if [[ -z "${CI}" ]]; then
   # gpg --keyserver hkp://pgp.mit.edu --recv ${gpg_key}
   prompt "Export key to Github"
-  ssh-keygen -t rsa -b 4096 -C ${git_email}
+  ssh-keygen -t rsa -b 4096 -C "${git_email}"
   pbcopy < ~/.ssh/id_rsa.pub
   open https://github.com/settings/ssh/new
 fi  
@@ -179,7 +175,6 @@ install 'pip3 install --upgrade' "${pips[@]}"
 install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
 install 'code --install-extension' "${vscode[@]}"
-brew tap homebrew/cask-fonts
 install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"

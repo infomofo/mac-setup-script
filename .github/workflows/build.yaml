@@ -1,13 +1,21 @@
-on: [pull_request]
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set Defaults
         run: ./defaults.sh
       - name: Install Software
         run: ./install.sh
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@master
+        run: |
+          brew install shellcheck
+          shellcheck *.sh
