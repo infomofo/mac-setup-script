@@ -13,8 +13,9 @@ fi
 # Disable the sound effects on boot
 # sudo nvram SystemAudioVolume=" "
 
-# Close any open System Preferences panes, to prevent them from overriding settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+# Close any open System Preferences/Settings panes, to prevent them from overriding settings we're about to change
+osascript -e 'tell application "System Settings" to quit' 2>/dev/null
+osascript -e 'tell application "System Preferences" to quit' 2>/dev/null
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
@@ -86,7 +87,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 	OpenWith -bool true \
 	Privileges -bool true
 
-# Don’t automatically rearrange Spaces based on most recent use
+# Don't automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
 # Automatically hide and show the Dock
@@ -111,6 +112,5 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Disable system screenshot sound
 defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
 
-# Disable Notification Center and remove the menu bar icon
-launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+# Disabling Notification Center is no longer possible since Big Sur (SIP-protected)
 
