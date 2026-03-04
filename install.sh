@@ -2,7 +2,6 @@
 
 # Install some stuff before others!
 important_casks=(
-  authy
   firefox
   google-chrome
   iterm2
@@ -24,7 +23,7 @@ brews=(
   ################################
   coreutils
   #hosts
-  "imagemagick --with-webp"
+  imagemagick
   macvim        # https://macvim-dev.github.io/macvim/
   node
   python 
@@ -32,15 +31,17 @@ brews=(
   tmux
   tree
   # "vim --with-override-system-vi"
-  "wget --with-iri"
+  wget
 )
 
 casks=(
-  cakebrew
   calibre
   discord
-  cleanmymac
-  steam
+  itsycal
+  signal
+  sourcetree
+  spectacle
+  zoom
 )
 
 pips=(
@@ -133,7 +134,7 @@ fi
 
 if test ! "$(command -v brew)"; then
   prompt "Install Homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   if [[ -z "${CI}" ]]; then
     prompt "Update Homebrew"
