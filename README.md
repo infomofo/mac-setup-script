@@ -1,4 +1,4 @@
-[![CI](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml/badge.svg)](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml)
+[![CI](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml)
 
 Dead simple script to setup my new Mac:
 
