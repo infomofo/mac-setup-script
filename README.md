@@ -1,3 +1,5 @@
+[![CI](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/infomofo/mac-setup-script/actions/workflows/build.yaml)
+
 Dead simple script to setup my new Mac:
 
 ```shell
@@ -6,4 +8,12 @@ curl -sL https://raw.githubusercontent.com/infomofo/mac-setup-script/main/defaul
 curl -O https://raw.githubusercontent.com/infomofo/mac-setup-script/main/install.sh
 chmod +x install.sh
 ./install.sh
+```
+
+On a personal machine, also run:
+
+```shell
+curl -O https://raw.githubusercontent.com/infomofo/mac-setup-script/main/install-personal.sh
+chmod +x install-personal.sh
+./install-personal.sh
 ```

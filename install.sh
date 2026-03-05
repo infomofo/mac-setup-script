@@ -10,35 +10,36 @@ important_casks=(
 
 brews=(
   ##### Install these first ######
-  # awscli
+  awscli
   bash
   gh
   git
   python3
   ################################
+  atlassian-labs/acli/acli
   coreutils
   fzf
   #hosts
-  imagemagick
+  gemini-cli
   jq
   macvim        # https://macvim-dev.github.io/macvim/
   node
   python
+  reattach-to-user-namespace
   shellcheck
   tmux
   tree
   # "vim --with-override-system-vi"
   wget
+  yamllint
+  yq
 )
 
 casks=(
-  calibre
-  discord
   github
   itsycal
   obsidian
   rectangle
-  signal
   sourcetree
   warp
   zoom
@@ -66,8 +67,10 @@ git_configs=(
   "user.email ${git_email}"
 )
 
-vscode=(
-)
+# vscode=(
+#   # Add VS Code extension IDs here, then uncomment this array
+#   # and the install line in the "Install secondary packages" section below.
+# )
 
 fonts=(
   font-fira-code
@@ -75,46 +78,18 @@ fonts=(
   font-source-code-pro
 )
 
+# Packages that must be fully installed in CI (prerequisites for non-brew steps)
+ci_real_install=(
+  gh        # needed for: gh extension install
+  node      # needed for: npm install --global
+)
+
 ######################################## End of app list ########################################
 set +e
 set -x
 
-function prompt {
-  if [[ -z "${CI}" ]]; then
-    read -r -p "Hit Enter to $1 ..."
-  fi
-}
-
-function install {
-  cmd=$1
-  shift
-  for pkg in "$@";
-  do
-    exec="$cmd $pkg"
-    #prompt "Execute: $exec"
-    if ${exec} ; then
-      echo "Installed $pkg"
-    else
-      echo "Failed to execute: $exec"
-      if [[ -n "${CI}" ]]; then
-        exit 1
-      fi
-    fi
-  done
-}
-
-function brew_install_or_upgrade {
-  if brew ls --versions "$1" >/dev/null; then
-    if (brew outdated | grep "$1" > /dev/null); then 
-      echo "Upgrading already installed package $1 ..."
-      brew upgrade "$1"
-    else 
-      echo "Latest $1 is already installed"
-    fi
-  else
-    brew install "$1"
-  fi
-}
+# shellcheck source=lib.sh
+source "$(dirname "$0")/lib.sh"
 
 if [[ -z "${CI}" ]]; then
   sudo -v # Ask for the administrator password upfront
@@ -139,8 +114,8 @@ echo "Install important software ..."
 install 'brew install --cask' "${important_casks[@]}"
 
 prompt "Install packages"
+brew tap atlassian-labs/acli
 install 'brew_install_or_upgrade' "${brews[@]}"
-brew link --overwrite ruby
 
 prompt "Set git defaults"
 for config in "${git_configs[@]}"
@@ -158,9 +133,11 @@ if [[ -z "${CI}" ]]; then
   open https://github.com/settings/ssh/new
 fi  
 
-prompt "Upgrade bash"
-sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
-sudo chsh -s "$(brew --prefix)"/bin/bash
+if [[ -z "${CI}" ]]; then
+  prompt "Upgrade bash"
+  sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
+  sudo chsh -s "$(brew --prefix)"/bin/bash
+fi
 
 prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
@@ -170,7 +147,8 @@ gh extension install github/gh-copilot
 
 prompt "Install secondary packages"
 install 'npm install --global' "${npms[@]}"
-install 'code --install-extension' "${vscode[@]}"
+# Uncomment when vscode extensions are added to the vscode array above
+#install 'code --install-extension' "${vscode[@]}"
 install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"
