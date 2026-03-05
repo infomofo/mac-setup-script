@@ -67,13 +67,21 @@ git_configs=(
   "user.email ${git_email}"
 )
 
-vscode=(
-)
+# vscode=(
+#   # Add VS Code extension IDs here, then uncomment this array
+#   # and the install line in the "Install secondary packages" section below.
+# )
 
 fonts=(
   font-fira-code
   font-jetbrains-mono
   font-source-code-pro
+)
+
+# Packages that must be fully installed in CI (prerequisites for non-brew steps)
+ci_real_install=(
+  gh        # needed for: gh extension install
+  node      # needed for: npm install --global
 )
 
 ######################################## End of app list ########################################
@@ -91,7 +99,11 @@ function install {
   shift
   for pkg in "$@";
   do
-    exec="$cmd $pkg"
+    if [ -n "${CI}" ] && [[ "$cmd" == brew* ]]; then
+      exec="$cmd --dry-run $pkg"
+    else
+      exec="$cmd $pkg"
+    fi
     #prompt "Execute: $exec"
     if ${exec} ; then
       echo "Installed $pkg"
@@ -105,15 +117,30 @@ function install {
 }
 
 function brew_install_or_upgrade {
+  # In CI, dry-run packages that aren't needed as prerequisites for later steps
+  local -a dry_run=()
+  if [ -n "${CI}" ]; then
+    local is_ci_prerequisite=false
+    for ci_pkg in "${ci_real_install[@]}"; do
+      if [[ "$1" == "$ci_pkg" ]]; then
+        is_ci_prerequisite=true
+        break
+      fi
+    done
+    if [[ "$is_ci_prerequisite" == false ]]; then
+      dry_run=(--dry-run)
+    fi
+  fi
+
   if brew ls --versions "$1" >/dev/null; then
-    if (brew outdated | grep "$1" > /dev/null); then 
+    if (brew outdated | grep "$1" > /dev/null); then
       echo "Upgrading already installed package $1 ..."
-      brew upgrade "$1"
-    else 
+      brew upgrade "${dry_run[@]}" "$1"
+    else
       echo "Latest $1 is already installed"
     fi
   else
-    brew install "$1"
+    brew install "${dry_run[@]}" "$1"
   fi
 }
 
@@ -142,7 +169,6 @@ install 'brew install --cask' "${important_casks[@]}"
 prompt "Install packages"
 brew tap atlassian-labs/acli
 install 'brew_install_or_upgrade' "${brews[@]}"
-brew link --overwrite ruby
 
 prompt "Set git defaults"
 for config in "${git_configs[@]}"
@@ -160,9 +186,11 @@ if [[ -z "${CI}" ]]; then
   open https://github.com/settings/ssh/new
 fi  
 
-prompt "Upgrade bash"
-sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
-sudo chsh -s "$(brew --prefix)"/bin/bash
+if [[ -z "${CI}" ]]; then
+  prompt "Upgrade bash"
+  sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
+  sudo chsh -s "$(brew --prefix)"/bin/bash
+fi
 
 prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
@@ -172,7 +200,8 @@ gh extension install github/gh-copilot
 
 prompt "Install secondary packages"
 install 'npm install --global' "${npms[@]}"
-install 'code --install-extension' "${vscode[@]}"
+# Uncomment when vscode extensions are added to the vscode array above
+#install 'code --install-extension' "${vscode[@]}"
 install 'brew install --cask' "${fonts[@]}"
 
 prompt "Update packages"

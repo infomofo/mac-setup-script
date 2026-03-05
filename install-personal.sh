@@ -31,7 +31,11 @@ function install {
   shift
   for pkg in "$@";
   do
-    exec="$cmd $pkg"
+    if [ -n "${CI}" ] && [[ "$cmd" == brew* ]]; then
+      exec="$cmd --dry-run $pkg"
+    else
+      exec="$cmd $pkg"
+    fi
     #prompt "Execute: $exec"
     if ${exec} ; then
       echo "Installed $pkg"
@@ -45,7 +49,9 @@ function install {
 }
 
 function brew_install_or_upgrade {
-  if brew ls --versions "$1" >/dev/null; then
+  if [ -n "${CI}" ]; then
+    brew install --dry-run "$1"
+  elif brew ls --versions "$1" >/dev/null; then
     if (brew outdated | grep "$1" > /dev/null); then
       echo "Upgrading already installed package $1 ..."
       brew upgrade "$1"
