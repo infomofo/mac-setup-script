@@ -99,7 +99,7 @@ function install {
   shift
   for pkg in "$@";
   do
-    if [ -n "${CI}" ] && [[ "$cmd" == brew* ]]; then
+    if [ -n "${CI}" ] && [[ "$cmd" == brew* ]] && [[ "$cmd" != brew_install_or_upgrade ]]; then
       exec="$cmd --dry-run $pkg"
     else
       exec="$cmd $pkg"
