@@ -24,7 +24,9 @@ brews=(
   jq
   macvim        # https://macvim-dev.github.io/macvim/
   node
+  nvm
   python
+  yarn
   reattach-to-user-namespace
   shellcheck
   tmux
