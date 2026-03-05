@@ -20,48 +20,8 @@ personal_brews=(
 set +e
 set -x
 
-function prompt {
-  if [[ -z "${CI}" ]]; then
-    read -r -p "Hit Enter to $1 ..."
-  fi
-}
-
-function install {
-  cmd=$1
-  shift
-  for pkg in "$@";
-  do
-    if [ -n "${CI}" ] && [[ "$cmd" == brew* ]]; then
-      exec="$cmd --dry-run $pkg"
-    else
-      exec="$cmd $pkg"
-    fi
-    #prompt "Execute: $exec"
-    if ${exec} ; then
-      echo "Installed $pkg"
-    else
-      echo "Failed to execute: $exec"
-      if [[ -n "${CI}" ]]; then
-        exit 1
-      fi
-    fi
-  done
-}
-
-function brew_install_or_upgrade {
-  if [ -n "${CI}" ]; then
-    brew install --dry-run "$1"
-  elif brew ls --versions "$1" >/dev/null; then
-    if (brew outdated | grep "$1" > /dev/null); then
-      echo "Upgrading already installed package $1 ..."
-      brew upgrade "$1"
-    else
-      echo "Latest $1 is already installed"
-    fi
-  else
-    brew install "$1"
-  fi
-}
+# shellcheck source=lib.sh
+source "$(dirname "$0")/lib.sh"
 
 if test ! "$(command -v brew)"; then
   echo "Homebrew is not installed. Please run install.sh first or install Homebrew manually."
