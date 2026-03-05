@@ -140,6 +140,7 @@ echo "Install important software ..."
 install 'brew install --cask' "${important_casks[@]}"
 
 prompt "Install packages"
+brew tap atlassian-labs/acli
 install 'brew_install_or_upgrade' "${brews[@]}"
 brew link --overwrite ruby
 
