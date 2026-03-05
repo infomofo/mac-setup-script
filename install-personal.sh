@@ -10,6 +10,8 @@ personal_casks=(
   discord
   signal
   steam
+  the-unarchiver
+  vlc
 )
 
 personal_brews=(

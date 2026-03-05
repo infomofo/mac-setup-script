@@ -3,17 +3,15 @@
 Dead simple script to setup my new Mac:
 
 ```shell
-cd ~/Downloads
-curl -sL https://raw.githubusercontent.com/infomofo/mac-setup-script/main/defaults.sh | bash
-curl -O https://raw.githubusercontent.com/infomofo/mac-setup-script/main/install.sh
-chmod +x install.sh
-./install.sh
+mkdir -p ~/Code
+git clone https://github.com/infomofo/mac-setup-script.git ~/Code/mac-setup-script
+cd ~/Code/mac-setup-script
+bash defaults.sh
+bash install.sh
 ```
 
 On a personal machine, also run:
 
 ```shell
-curl -O https://raw.githubusercontent.com/infomofo/mac-setup-script/main/install-personal.sh
-chmod +x install-personal.sh
-./install-personal.sh
+bash install-personal.sh
 ```
