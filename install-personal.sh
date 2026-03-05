@@ -3,8 +3,8 @@
 # Personal-only software — apps that don't belong on a work machine.
 
 personal_casks=(
+  affinity
   affinity-designer
-  affinity-photo
   affinity-publisher
   calibre
   discord
