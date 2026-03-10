@@ -10,6 +10,7 @@ personal_casks=(
   discord
   signal
   steam
+  telegram
   the-unarchiver
   vlc
 )
