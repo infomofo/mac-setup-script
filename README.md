@@ -10,6 +10,10 @@ bash defaults.sh
 bash install.sh
 ```
 
+Then set up dotfiles (shell config, vim, tmux, etc.) from the
+[dotfiles repo](https://github.com/infomofo/dotfiles) — see its README for Keychain secrets
+and service account key setup.
+
 On a personal machine, also run:
 
 ```shell
