@@ -11,7 +11,6 @@ important_casks=(
 brews=(
   ##### Install these first ######
   awscli
-  bash
   gh
   git
   python3
@@ -43,7 +42,6 @@ casks=(
   obsidian
   rectangle
   sourcetree
-  warp
   zoom
 )
 
@@ -126,20 +124,6 @@ do
   value="${config#* }"
   git config --global "${key}" "${value}"
 done
-
-if [[ -z "${CI}" ]]; then
-  # gpg --keyserver hkp://pgp.mit.edu --recv ${gpg_key}
-  prompt "Export key to Github"
-  ssh-keygen -t rsa -b 4096 -C "${git_email}"
-  pbcopy < ~/.ssh/id_rsa.pub
-  open https://github.com/settings/ssh/new
-fi  
-
-if [[ -z "${CI}" ]]; then
-  prompt "Upgrade bash"
-  sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
-  sudo chsh -s "$(brew --prefix)"/bin/bash
-fi
 
 prompt "Install software"
 install 'brew install --cask' "${casks[@]}"
