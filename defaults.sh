@@ -114,3 +114,18 @@ defaults write com.apple.systemsound "com.apple.sound.uiaudio.enabled" -int 0
 
 # Disabling Notification Center is no longer possible since Big Sur (SIP-protected)
 
+# Time Machine exclusions for large/ephemeral directories (requires root)
+if [[ -z "${CI}" ]]; then
+  sudo tmutil addexclusion -p "$HOME/Code"
+  sudo tmutil addexclusion -p "$HOME/Documents"
+  sudo tmutil addexclusion -p "$HOME/Downloads"
+  sudo tmutil addexclusion -p "$HOME/Movies"
+  sudo tmutil addexclusion -p "$HOME/Music"
+  sudo tmutil addexclusion -p "$HOME/Pictures"
+  sudo tmutil addexclusion -p "$HOME/Applications"
+  sudo tmutil addexclusion -p "$HOME/Emulation"
+  sudo tmutil addexclusion -p "$HOME/VirtualBox VMs"
+  sudo tmutil addexclusion -p "$HOME/gdrive"
+  sudo tmutil addexclusion -p "$HOME/gcrypt"
+fi
+
