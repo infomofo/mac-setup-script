@@ -4,10 +4,9 @@
 
 personal_casks=(
   affinity
-  affinity-designer
-  affinity-publisher
   calibre
   discord
+  google-drive
   signal
   steam
   telegram
