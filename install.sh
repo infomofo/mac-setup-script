@@ -30,6 +30,7 @@ brews=(
   shellcheck
   tmux
   tree
+  uv
   # "vim --with-override-system-vi"
   wget
   yamllint
@@ -37,6 +38,7 @@ brews=(
 )
 
 casks=(
+  copilot-cli
   github
   itsycal
   obsidian
@@ -108,6 +110,14 @@ else
     brew doctor
   fi
 fi
+
+# Ensure brew is in PATH for the rest of this script (needed after a fresh install)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 echo "Install important software ..."
